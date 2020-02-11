@@ -55,7 +55,23 @@ Follow the instructions to provision Kong and Konga without docker-compose on:
 
 
 
+# Feature - Configurations 
 
+### Kong Admin API is available at : http://localhost:8001 
+### Kong Gateway is avaliable at : http://localhost:8000
+
+### Konga UI is avaliable at : http://localhost:1337
+
+
+
+## 1. Konga setup
+
+    1. Browse to http://localhost:1337
+    2. Create a admin user with username , email and password.
+    3. Login to Konga
+    4. Point to Kong connection :
+            - Name : Any Name (e.g Kong)
+            - URL : http://kong:8001/   ( since using docker-compose the Kong service is exposed to other containers as  "Kong" hostname)
 
 
 # References
