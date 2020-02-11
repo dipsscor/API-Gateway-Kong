@@ -1,5 +1,7 @@
 # API Gateway Kong with UI (Konga)
-This project aims to showcase the various capabilities of Kong API Gateway and Konga (Additional UI for Kong). 
+This project aims to showcase the various capabilities of Kong API Gateway and Konga (Additional UI for Kong). This project uses Postgres as DB for Kong and Kong configuration stores. 
+
+There is a DB Less KONG configuration as well in next project.
 
 ## Kong
 Kong is a widely adopted, open source API Gateway, written in Lua. It runs on top of Nginx, leveraging the OpenResty framework and provides a simple RESTful API that can be used to provision your infrastructure in a dynamic way.
@@ -11,44 +13,45 @@ It can be integrated with some of the most popular databases out of the box and 
 
 
 
-# Kong in Docker Compose
-
-This is the official Docker Compose template for [Kong][kong-site-url].
-
-# What is Kong?
-
-You can find the official Docker distribution for Kong at [https://store.docker.com/images/kong](https://store.docker.com/images/kong).
-
-# How to use this template
+## Kong and Konga with Docker Compose
 
 This Docker Compose template provisions a Kong container with a Postgres database, plus a nginx load-balancer. After running the template, the `nginx-lb` load-balancer will be the entrypoint to Kong.
 
 To run this template execute:
 
-```shell
-$ docker-compose up
-```
+    ```shell
+    $ docker-compose up
+    ```
 
 To scale Kong (ie, to three instances) execute:
 
-```shell
-$ docker-compose scale kong=3
-```
+    ```shell
+    $ docker-compose scale kong=3
+    ```
 
 Kong will be available through the `nginx-lb` instance on port `8000`, and `8001`. You can customize the template with your own environment variables or datastore configuration.
 
 Kong's documentation can be found at [https://docs.konghq.com/][kong-docs-url].
 
-## Issues
+The docker-compose template for Kong and Konga are available at:
 
-If you have any problems with or questions about this image, please contact us through a [GitHub issue][github-new-issue].
+    https://gist.github.com/pantsel/73d949774bd8e917bfd3d9745d71febf
+    
+## Kong and Konga without Docker-compose
+Follow the instructions to provision Kong and Konga without docker-compose on:
 
-## Contributing
+    https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
 
-You are invited to contribute new features, fixes, or updates, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
 
-Before you start to code, we recommend discussing your plans through a [GitHub issue][github-new-issue], especially for more ambitious contributions. This gives other contributors a chance to point you in the right direction, give you feedback on your design, and help you find out if someone else is working on the same thing.
 
-[kong-site-url]: https://konghq.com/
-[kong-docs-url]: https://docs.konghq.com/
-[github-new-issue]: https://github.com/Kong/docker-kong/issues/new
+
+
+# References
+
+    [kong-site-url]: https://konghq.com/
+    [kong-docs-url]: https://docs.konghq.com/
+    [github-new-issue]: https://github.com/Kong/docker-kong/issues/new
+    https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
+    https://gist.github.com/pantsel/73d949774bd8e917bfd3d9745d71febf
+    https://docs.konghq.com/hub/
+    
