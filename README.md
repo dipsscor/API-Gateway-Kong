@@ -13,6 +13,12 @@ It can be integrated with some of the most popular databases out of the box and 
 
 
 
+![alt text](https://github.com/dipsscor/API-Gateway-Kong/blob/master/screenshots/architecture.png)
+
+
+# Setup - Configurations (Docker)
+
+
 ## Kong and Konga with Docker Compose
 
 This Docker Compose template provisions a Kong container with a Postgres database, plus a nginx load-balancer. After running the template, the `nginx-lb` load-balancer will be the entrypoint to Kong.
@@ -36,11 +42,17 @@ Kong's documentation can be found at [https://docs.konghq.com/][kong-docs-url].
 The docker-compose template for Kong and Konga are available at:
 
     https://gist.github.com/pantsel/73d949774bd8e917bfd3d9745d71febf
-    
+
+
+
+
+
 ## Kong and Konga without Docker-compose
 Follow the instructions to provision Kong and Konga without docker-compose on:
 
     https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
+
+
 
 
 
