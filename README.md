@@ -1,6 +1,13 @@
-# API Gateway Kong
+# API Gateway Kong with UI (Konga)
+This project aims to showcase the various capabilities of Kong API Gateway and Konga (Additional UI for Kong). 
 
+## Kong
+Kong is a widely adopted, open source API Gateway, written in Lua. It runs on top of Nginx, leveraging the OpenResty framework and provides a simple RESTful API that can be used to provision your infrastructure in a dynamic way.
+Kong is referred to as microservices API Gateway.
 
+## Konga
+Konga is a fully featured open source, multi-user GUI, that makes the hard task of managing multiple Kong installations a breeze.
+It can be integrated with some of the most popular databases out of the box and provides the visual tools you need to better understand and maintain your architecture.
 
 
 
