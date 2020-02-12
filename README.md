@@ -79,6 +79,38 @@ Follow the instructions to provision Kong and Konga without docker-compose on:
             - URL : http://kong:8001/   ( since using docker-compose the Kong service is exposed to other containers as  "Kong" hostname)
 
 
+## 2. User setup
+
+    1. Create some users in the user sections of Konga
+    
+
+## 3. Services and Routes creation
+
+For this POC, we’re going to use the excelent online fake API for testing and prototyping provided by "jsonplaceholder.typicode.com"
+
+
+    1. Go to the Services section and create a new Service "Testing-Service"
+    
+          Config:
+          
+            |Protocol|"https"| 
+            ------------------
+            - Host: "jsonplaceholder.typicode.com" ## For this POC we are using "jsonplaceholder.typicode.com" which provides some rest APIs.
+            
+            - Path: /API-V1.0  ## Path that would be used to get the endpoints : http://localhost:8000/API-V1.0/<route -path>
+            
+Note: Here Upstream server means the host and endpoint of the actual service.
+
+    2. Go to routes section and create routes for following endpoints
+            /users
+            /comments
+            /albums
+            /photos
+            /todos
+            /posts
+            
+
+
 # References
 
     [kong-site-url]: https://konghq.com/
