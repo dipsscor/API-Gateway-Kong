@@ -7,6 +7,11 @@ There is a DB Less KONG configuration as well in next project.
 Kong is a widely adopted, open source API Gateway, written in Lua. It runs on top of Nginx, leveraging the OpenResty framework and provides a simple RESTful API that can be used to provision your infrastructure in a dynamic way.
 Kong is referred to as microservices API Gateway.
 
+
+### Kong is available in both community and Enterprise Edition:
+
+![alt text](https://github.com/dipsscor/API-Gateway-Kong/blob/master/screenshots/version_comparision.png)
+
 ## Konga
 Konga is a fully featured open source, multi-user GUI, that makes the hard task of managing multiple Kong installations a breeze.
 It can be integrated with some of the most popular databases out of the box and provides the visual tools you need to better understand and maintain your architecture.
