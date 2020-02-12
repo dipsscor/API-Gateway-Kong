@@ -134,8 +134,8 @@ The snapshot for service configuration can be found in snapshots --> service_rou
         5. Go to "consumers" in left pane and create 2 consumers.
         
             - username: Give the username e.g. "mike , john" and submit
-            - Create credentials for the newly created consumers of the services
-            - Basic --> Basic Auth -->username: "mike/john"-->password--> "password"
+            - Create Basic credentials for the newly created consumers of the services
+            - Credentials --> Basic Auth -->username: "mike/john"-->password--> "password"
             
         6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
         
@@ -155,6 +155,43 @@ Test the services by passing the credentials in the header of the requests.
             
             HTTP/1.1 200 OK
 
+
+
+## Stage 5. Authentication - Key Auth
+
+        1. Go the service created in Stage 3.
+        2. Go to Plugins --> Add Plugin -->Authentication --> Key Auth
+        3. Fill the form
+            - key names : "apikey" ## Enter any key name that would be used as key name when adding to header
+            - Key in body : Incase you want to supply key in body , enable this field
+        4. The Key Auth plugin is created and applied to all "consumers" of the service with their api keys.
+        
+        5. Go to "consumers" in left pane and create 2 consumers.
+        
+            - username: Give the username e.g. "mike , john" and submit
+            - Create Key Auth credentials for the newly created consumers of the services
+            - Credentials--> API keys -->leave blank for Kong to generate the key.
+            
+        6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
+        
+        
+Test the services by passing the API key credential in the header of the requests.
+
+### Postman logs:
+
+    With incorrect keys:
+    
+            GET /API-V1.0/comments HTTP/1.1
+            apikey: 1111
+
+            {"message": "Invalid authentication credentials"}
+            
+    With correct keys:
+    
+            GET /API-V1.0/comments HTTP/1.1
+            apikey: 2uASxFLd6bMc2qEgshr7qzvqzXVAZQ1A
+            
+            HTTP/1.1 200 OK
 
 
 
