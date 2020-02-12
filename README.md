@@ -69,7 +69,7 @@ Follow the instructions to provision Kong and Konga without docker-compose on:
 
 
 
-## 1. Konga setup
+## Stage 1. Konga setup
 
     1. Browse to http://localhost:1337
     2. Create a admin user with username , email and password.
@@ -79,12 +79,12 @@ Follow the instructions to provision Kong and Konga without docker-compose on:
             - URL : http://kong:8001/   ( since using docker-compose the Kong service is exposed to other containers as  "Kong" hostname)
 
 
-## 2. User setup
+## Stage 2. User setup
 
     1. Create some users in the user sections of Konga
     
 
-## 3. Services and Routes creation
+## Stage 3. Services and Routes creation
 
 For this POC, we’re going to use the excelent online fake API for testing and prototyping provided by "jsonplaceholder.typicode.com"
 
@@ -122,6 +122,38 @@ Save the configurations and test the services at with all HTTP methods:
 
 The snapshot for service configuration can be found in snapshots --> service_route_configuration folder.
 
+
+
+## Stage 4. Authentication - Basic
+
+        1. Go the service created in Stage 3.
+        2. Go to Plugins --> Add Plugin -->Authentication --> Basic Auth
+        3. leave all fields and "add plugin"
+        4. The Basic Auth plugin is created and applied to all "consumers" of the service with their usename/pwd.
+        
+        5. Go to "consumers" in left pane and create 2 consumers.
+        
+            - username: Give the username e.g. "mike , john" and submit
+            - Create credentials for the newly created consumers of the services
+            - Basic --> Basic Auth -->username: "mike/john"-->password--> "password"
+            
+        6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
+        
+Test the services by passing the credentials in the header of the requests.
+
+### Postman Logs:
+    Without Authentication:
+    
+            GET http://localhost:8000/API-V1.0/comments
+
+            {"message":"Unauthorized"}
+            
+    With Username and password:
+    
+            GET /API-V1.0/comments HTTP/1.1
+            Authorization: Basic bWlrZTpwYXNzd29yZA==
+            
+            HTTP/1.1 200 OK
 
 
 
