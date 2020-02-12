@@ -93,8 +93,8 @@ For this POC, we’re going to use the excelent online fake API for testing and 
     
           Config:
           
-            |Protocol|"https"| 
-            ------------------
+            - Protocol: "https" 
+            
             - Host: "jsonplaceholder.typicode.com" ## For this POC we are using "jsonplaceholder.typicode.com" which provides some rest APIs.
             
             - Path: /API-V1.0  ## Path that would be used to get the endpoints : http://localhost:8000/API-V1.0/<route -path>
@@ -104,11 +104,26 @@ Note: Here Upstream server means the host and endpoint of the actual service.
     2. Go to routes section and create routes for following endpoints
             /users
             /comments
-            /albums
-            /photos
-            /todos
             /posts
             
+            
+          Config:   
+            - Name: Give the name of the route
+            
+            - methods: Mention the HTTP methods ( GET, POST , PUT , PATCH , DELETE) in caps and press return. 
+            
+            - protocols: Select the protocols (HTTP,HTTPS) and press return.
+
+Save the configurations and test the services at with all HTTP methods:
+
+    http://locahost:8000/API-V1.0/users
+    http://locahost:8000/API-V1.0/comments
+    http://locahost:8000/API-V1.0/posts
+
+The snapshot for service configuration can be found in snapshots --> service_route_configuration folder.
+
+
+
 
 
 # References
