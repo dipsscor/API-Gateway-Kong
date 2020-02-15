@@ -224,12 +224,9 @@ Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7
 
   Test the services by with the following process:
   
-  #
-  #
-  #
+
   
-  
-  ### 1. Authorization ( Get the authorization code):
+  #### 1. Authorization ( Get the authorization code):
   Authorize the calling application at the authorization server which is appended to the resource endpoint. The authorization should be done at SSL port which is 8443 for kong. 
   
   The Kong authorization endpoint is:
@@ -269,7 +266,7 @@ Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7
         }
         
         
-   ### 2. Authentication ( Get the access token with the authorization code): 
+   #### 2. Authentication ( Get the access token with the authorization code): 
    
    Get the access token by using the authorization code at the endpoint 
    
@@ -298,7 +295,7 @@ Send the rest of the data as form-data in the request body:
         }
         
         
-   ### 3. Access the resource with the token:
+   #### 3. Access the resource with the token:
    
    Access the resource by sending the authorization token in the header:
    
