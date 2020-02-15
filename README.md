@@ -359,7 +359,7 @@ Send the rest of the data as form-data in the request body:
                                   base64UrlEncode(header) + "." +
                                   base64UrlEncode(payload),
 
-                                QX17sjBTY50xUHvEFj5JR5BqaQiUvpS2 ## secret from the JWT Cred
+                                QX17sjBTY50xUHvEFj5JR5BqaQiUvpS2 ## your-256-bit-secret from the JWT Cred
 
                                 ) secret base64 encoded (checked)
                     
@@ -374,6 +374,29 @@ Test the services by passing the jwt key credential in the header of the request
 
         HTTP/1.1 200 OK                   
 
+
+
+
+## Stage 5. 
+## Security - ACL (Acess Control)
+Apply security to previously created Authentication (Basic / key auth / oauth2 / Jwt / etc) plugins which were till not applied to all users. 
+When ACL is applied only allowed conusmers will be able to access the services using their creds. ACL works on kong when consumer to assigned to groups and groups are either whitelisted or blacklisted.
+
+        1. Go to consumers and assign them to each groups . e.g John --> API Developer, Mike --> API Manager
+        2. Go to services --> Add plugin -- >Security ---> acl
+        3. Fill the form :
+        
+                - Whilelist : "API Developer" ## write the consumer group and press return
+                - blacklist : "<black list consumer group>"
+        
+        4. Check eligble consumers. The consumers belonging to the groups that are not whitelisted cannot access the service.
+        
+ Test the services by consumer credentials for NOT whitelisted consumers       
+       
+     Response:    
+            {
+                "message": "You cannot consume this service"
+            }
 
 # References
 
