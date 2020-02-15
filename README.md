@@ -124,7 +124,8 @@ The snapshot for service configuration can be found in snapshots --> service_rou
 
 
 
-## Stage 4. Authentication - Basic
+## Stage 4. 
+## Authentication - Basic
 
         1. Go the service created in Stage 3.
         2. Go to Plugins --> Add Plugin -->Authentication --> Basic Auth
@@ -139,7 +140,7 @@ The snapshot for service configuration can be found in snapshots --> service_rou
             
         6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
         
-Test the services by passing the credentials in the header of the requests.
+Test the services by passing the credentials {Username and Password} in the header of the requests.
 
 ### Postman Logs:
     Without Authentication:
@@ -157,7 +158,7 @@ Test the services by passing the credentials in the header of the requests.
 
 
 
-## Stage 5. Authentication - Key Auth
+## Authentication - Key Auth
 
         1. Go the service created in Stage 3.
         2. Go to Plugins --> Add Plugin -->Authentication --> Key Auth
@@ -175,7 +176,7 @@ Test the services by passing the credentials in the header of the requests.
         6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
         
         
-Test the services by passing the API key credential in the header of the requests.
+Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7qzvqzXVAZQ1A} in the header of the requests.
 
 ### Postman logs:
 
@@ -194,6 +195,115 @@ Test the services by passing the API key credential in the header of the request
             HTTP/1.1 200 OK
 
 
+## Authentication - OAuth2.0
+
+        1. Go the service created in Stage 3.
+        2. Go to Plugins --> Add Plugin -->Authentication --> oauth2
+        3. Fill the form
+                - scopes : email , phone , address ## press return for each scope
+                - mandatory scope: true
+                - token expiration : Default value is 7200 milliseconds
+                - enable authorization code : true
+                
+        5. Go to "consumers" in left pane and create 2 consumers.
+        
+            - username: Give the username e.g. "mike , john" and submit
+            - Create oauth2 credentials for the newly created consumers of the services
+            - Credentials--> oauth2 -->
+            
+                    - name : "test_oauth2_app" ## Name of the credential
+                    
+                    - redirect_uris : e.g. "http://konghq.com/" ## This the redirect URL where the authorization response will come back with credentials. Ideally this is the client application URL requesting for authorization.
+                    
+                    - client_id : blank to get generated.
+                    - client_secret : blank to get generated.
+            
+        6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
+
+
+
+  Test the services by with the following process:
+  
+  ### 1. Authorization ( Get the authorization code):
+  Authorize the calling application at the authorization server which is appended to the resource endpoint. The authorization should be done at SSL port which is 8443 for kong. 
+  
+  The Kong authorization endpoint is:
+        
+        -/oauth2/authorize
+        
+        -e.g. POST: https://<service-host>:<ssl-port>//<service-endpoint>/oauth2/authorize
+  
+        In this case:
+        POST: https://localhost:8443/API-V1.0/comments/oauth2/authorize
+        
+  Send the rest of the data as form-data in the request body:
+  
+        - provision_key : The provision key generated on the oauth2 plugin added.
+        - client_id : consumer oauth2 cred client ID
+        - client_secret : consumer oauth2 cred client secret
+        - redirect_uri : redirect URL where the authorization response will come back with credentials.
+        - scope : comma separated scopes
+        - authenticated_userid : consumer user id to be authenticated.
+        - response_type : "code" ## since the authorization code will be send back.
+        
+        
+    e.g.
+        - provision_key : yWg5F8bXvgFiHR6OKqcqcEWDeNm6ODVM
+        - client_id : WITJXt7wXf6AZ5UahwL9caFD3BVgBtl6
+        - client_secret : tC3Ypj8aC33vz2sfwhfu8T9hz9hre5wE
+        - redirect_uri : http://konghq.com/
+        - scope : email
+        - authenticated_userid : john
+        - response_type : code
+        
+        
+ Response: 
+ 
+        {
+            "redirect_uri": "http://konghq.com/?code=d84vNp5pxJbsv5lsevdA36KIR9x3ZyBi"
+        }
+        
+        
+   ### 2. Authentication ( Get the access token with the authorization code): 
+   
+   Get the access token by using the authorization code at the endpoint 
+   
+        - /oauth2/token
+        -e.g. POST: https://<service-host>:<ssl-port>//<service-endpoint>/oauth2/token
+  
+        In this case:
+        POST: https://localhost:8443/API-V1.0/comments/oauth2/token
+        
+Send the rest of the data as form-data in the request body:
+
+        - grant_type:authorization_code
+        - client_id:WITJXt7wXf6AZ5UahwL9caFD3BVgBtl6
+        - client_secret:tC3Ypj8aC33vz2sfwhfu8T9hz9hre5wE
+        - redirect_uri:http://konghq.com/
+        - code:d84vNp5pxJbsv5lsevdA36KIR9x3ZyBi
+ 
+ 
+ Response: 
+ 
+        {
+            "refresh_token": "kzrN5Nrd7vV5JLr6W35E7m5t0uefOMaB",
+            "token_type": "bearer",
+            "access_token": "Vw4cwDpE3AzbKbJzs7nI5JHqe5wqzJQU",
+            "expires_in": 7200
+        }
+        
+        
+   ### 3. Access the resource with the token:
+   
+   Access the resource by sending the authorization token in the header:
+   
+        GET /API-V1.0/comments/ HTTP/1.1
+        Authorization: Bearer Vw4cwDpE3AzbKbJzs7nI5JHqe5wqzJQU
+        
+        
+        HTTP/1.1 200 OK
+
+
 
 # References
 
@@ -203,4 +313,7 @@ Test the services by passing the API key credential in the header of the request
     https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
     https://gist.github.com/pantsel/73d949774bd8e917bfd3d9745d71febf
     https://docs.konghq.com/hub/
+    https://github.com/Kong/kong-oauth2-hello-world
+    https://medium.com/@far3ns/kong-oauth-2-0-plugin-38faf938a468
+    
     
