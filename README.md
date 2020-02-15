@@ -205,7 +205,7 @@ Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7
                 - token expiration : Default value is 7200 milliseconds
                 - enable authorization code : true
                 
-        5. Go to "consumers" in left pane and create 2 consumers.
+        4. Go to "consumers" in left pane and create 2 consumers.
         
             - username: Give the username e.g. "mike , john" and submit
             - Create oauth2 credentials for the newly created consumers of the services
@@ -218,7 +218,7 @@ Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7
                     - client_id : blank to get generated.
                     - client_secret : blank to get generated.
             
-        6. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
+        5. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
 
 
 
@@ -305,6 +305,74 @@ Send the rest of the data as form-data in the request body:
 
 
 
+## Authentication - JWT
+
+        1. Go the service created in Stage 3.
+        2. Go to Plugins --> Add Plugin -->Authentication --> jwt
+        3. Fill the form
+                - uri param names : "jwt" and press return
+                - secret is base64: true
+                - header names: "authorization" and press return
+                
+        4. Go to "consumers" in left pane and create 2 consumers.
+        
+            - username: Give the username e.g. "mike , john" and submit
+            - Create jwt credentials for the newly created consumers of the services
+            - Credentials--> jwt --> Leave all fields blank and generate the jwt credentials.
+            
+                eg:
+
+                        {
+                          "rsa_public_key": null,
+                          "created_at": 1581780408,
+                          "consumer": {
+                            "id": "6feca0d4-825d-465c-81a5-7ea3de0de2cd"
+                          },
+                          "id": "6ab1b2f7-6826-4a49-a9b7-26500f8cdadf",
+                          "tags": null,
+                          "key": "Qfzl2GC8l77osSnio8KuzKD7qbPnLzAu",
+                          "secret": "QX17sjBTY50xUHvEFj5JR5BqaQiUvpS2",
+                          "algorithm": "HS256"
+                        }
+            
+        5. Go back to "services" section --> eligible consumers --> check both the consumers "mike /john" are added.
+        
+        6. Craft a JWT with a secret (HS256): 
+        
+                    - Use http://jwt.io --> jwt debugger -->decoded
+                        - Header:
+
+                                {
+                                  "alg": "HS256",
+                                  "typ": "JWT"
+                                }                            
+                        - Payload:
+                                 {
+                                    "iss": "Qfzl2GC8l77osSnio8KuzKD7qbPnLzAu" ## Key from the JWT Cred
+                                 }  
+
+                        - Verify Signature:
+
+                                HMACSHA256(
+                                  base64UrlEncode(header) + "." +
+                                  base64UrlEncode(payload),
+
+                                QX17sjBTY50xUHvEFj5JR5BqaQiUvpS2 ## secret from the JWT Cred
+
+                                ) secret base64 encoded (checked)
+                    
+                     - Get the encoded token:
+                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRZnpsMkdDOGw3N29zU25pbzhLdXpLRDdxYlBuTHpBdSJ9.Fp-VtgXTFOOWTAO2zlEN8rDv5V03nG-qMS3_lVSo6yw"
+
+Test the services by passing the jwt key credential in the header of the requests.
+
+                     
+        GET /API-V1.0/comments/ HTTP/1.1
+        Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRZnpsMkdDOGw3N29zU25pbzhLdXpLRDdxYlBuTHpBdSJ9.Fp-VtgXTFOOWTAO2zlEN8rDv5V03nG-qMS3_lVSo6yw
+
+        HTTP/1.1 200 OK                   
+
+
 # References
 
     [kong-site-url]: https://konghq.com/
@@ -315,5 +383,6 @@ Send the rest of the data as form-data in the request body:
     https://docs.konghq.com/hub/
     https://github.com/Kong/kong-oauth2-hello-world
     https://medium.com/@far3ns/kong-oauth-2-0-plugin-38faf938a468
+    https://docs.konghq.com/hub/kong-inc/jwt/
     
     
