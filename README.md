@@ -224,6 +224,11 @@ Test the services by passing the API key credential {apikey:2uASxFLd6bMc2qEgshr7
 
   Test the services by with the following process:
   
+  #
+  #
+  #
+  
+  
   ### 1. Authorization ( Get the authorization code):
   Authorize the calling application at the authorization server which is appended to the resource endpoint. The authorization should be done at SSL port which is 8443 for kong. 
   
